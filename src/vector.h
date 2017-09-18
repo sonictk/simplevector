@@ -11,7 +11,7 @@
 #include "vector_library.h"
 
 
-struct DLLExport Vector
+struct Vector
 {
 	int size;			/// The num. of items in the vector.
 	int capacity;		/// The maximum num. of items the vector can have.
@@ -25,7 +25,7 @@ struct DLLExport Vector
  *
  * @param vector		The vector to initialize;
  */
-DLLExport void vectorInit(Vector *vector);
+Shared DLLExport void vectorInit(Vector *vector);
 
 
 /**
@@ -34,7 +34,7 @@ DLLExport void vectorInit(Vector *vector);
  * @param vector			The vector to resize.
  * @param newCapacity		The new capacity to resize the vector to.
  */
-DLLExport void vectorResize(Vector *vector, int newCapacity);
+Shared DLLExport void vectorResize(Vector *vector, int newCapacity);
 
 
 /**
@@ -43,7 +43,7 @@ DLLExport void vectorResize(Vector *vector, int newCapacity);
  * @param vector		The vector to add an item to.
  * @param value		The pointer to the item to add.
  */
-DLLExport void vectorAppend(Vector *vector, void *value);
+Shared DLLExport void vectorAppend(Vector *vector, void *value);
 
 
 /**
@@ -54,7 +54,7 @@ DLLExport void vectorAppend(Vector *vector, void *value);
  *
  * @return				A pointer to the item to retrieve.
  */
-DLLExport void *vectorGet(Vector *vector, int index);
+Shared DLLExport void *vectorGet(Vector *vector, int index);
 
 
 /**
@@ -64,7 +64,7 @@ DLLExport void *vectorGet(Vector *vector, int index);
  * @param index		The index in the vector at which to set it.
  * @param value		The new item to set.
  */
-DLLExport void vectorSet(Vector *vector, int index, int value);
+Shared DLLExport void vectorSet(Vector *vector, int index, void *value);
 
 
 /**
@@ -73,7 +73,7 @@ DLLExport void vectorSet(Vector *vector, int index, int value);
  * @param vector		The vector to remove an item from.
  * @param index		The index at which the item to be removed resides at.
  */
-DLLExport void vectorRemove(Vector *vector, int index);
+Shared DLLExport void vectorRemove(Vector *vector, int index);
 
 
 /**
@@ -83,7 +83,7 @@ DLLExport void vectorRemove(Vector *vector, int index);
  *
  * @param vector		The vector to increase the capacity for.
  */
-DLLExport void vectorIncreaseCapacityIfFull(Vector *vector);
+Shared DLLExport void vectorIncreaseCapacityIfFull(Vector *vector);
 
 
 /**
@@ -91,7 +91,7 @@ DLLExport void vectorIncreaseCapacityIfFull(Vector *vector);
  *
  * @param vector		The vector to deallocate the memory for its items.
  */
-DLLExport void vectorFree(Vector *vector);
+Shared DLLExport void vectorFree(Vector *vector);
 
 
 #endif /* VECTOR_H */

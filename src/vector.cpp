@@ -9,7 +9,7 @@ using std::realloc;
 using std::cerr;
 
 
-DLLExport void vectorInit(Vector *vector)
+Shared DLLExport void vectorInit(Vector *vector)
 {
 	vector->capacity = VECTOR_INITIAL_CAPACITY;
 	vector->size = 0;
@@ -17,7 +17,7 @@ DLLExport void vectorInit(Vector *vector)
 }
 
 
-DLLExport void vectorResize(Vector *vector, int newCapacity)
+Shared DLLExport void vectorResize(Vector *vector, int newCapacity)
 {
 	void **items = (void **)realloc(vector->items, sizeof(void *) * newCapacity);
 	if (items) {
@@ -27,14 +27,14 @@ DLLExport void vectorResize(Vector *vector, int newCapacity)
 }
 
 
-DLLExport void vectorAppend(Vector *vector, void *value)
+Shared DLLExport void vectorAppend(Vector *vector, void *value)
 {
 	vectorIncreaseCapacityIfFull(vector);
 	vector->items[vector->size++] = value;
 }
 
 
-DLLExport void *vectorGet(Vector *vector, int index)
+Shared DLLExport void *vectorGet(Vector *vector, int index)
 {
 	if (index >= vector->size || index < 0) {
 		cerr << "Index" << index << "out of bounds for vector of size" << vector->size <<"\n";
@@ -44,7 +44,7 @@ DLLExport void *vectorGet(Vector *vector, int index)
 }
 
 
-DLLExport void vectorSet(Vector *vector, int index, void *value)
+Shared DLLExport void vectorSet(Vector *vector, int index, void *value)
 {
 	if (index >= 0 && index < vector->size) {
 		vector->items[index] = value;
@@ -52,7 +52,7 @@ DLLExport void vectorSet(Vector *vector, int index, void *value)
 }
 
 
-DLLExport void vectorRemove(Vector *vector, int index)
+Shared DLLExport void vectorRemove(Vector *vector, int index)
 {
 	if (index < 0 || index >= vector->size) {
 		return;
@@ -69,7 +69,7 @@ DLLExport void vectorRemove(Vector *vector, int index)
 }
 
 
-DLLExport void vectorIncreaseCapacityIfFull(Vector *vector)
+Shared DLLExport void vectorIncreaseCapacityIfFull(Vector *vector)
 {
 	if (vector->size >= vector->capacity) {
 		// NOTE: (yliangsiew) This is wasteful but better than making several realloc()
@@ -80,7 +80,7 @@ DLLExport void vectorIncreaseCapacityIfFull(Vector *vector)
 }
 
 
-DLLExport void vectorFree(Vector *vector)
+Shared DLLExport void vectorFree(Vector *vector)
 {
 	free(vector->items);
 	vector->size = 0;

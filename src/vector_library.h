@@ -1,6 +1,13 @@
 #ifndef VECTOR_MAIN_H
 #define VECTOR_MAIN_H
 
+#ifdef __cplusplus
+
+#define Shared extern "C"
+#define Shared extern "C"
+
+#endif // __cplusplus
+
 #ifdef _WIN32
 
 #include <Windows.h>
@@ -12,7 +19,6 @@
 
 #include <dlfcn.h>
 
-// NOTE: (sonictk) On Linux, these will do nothing
 #define DLLExport
 #define DLLImport
 
