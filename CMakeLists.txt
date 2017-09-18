@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12)
 set(PROJECT_NAME "simpleVector")
-# TODO: (sonictk) Make tests
-# set(TEST_EXECUTABLE_NAME "tests_${PROJECT_NAME}")
+set(TEST_EXECUTABLE_NAME "tests_${PROJECT_NAME}")
 
 if(APPLE)
     message(STATUS "Setting MacOSX SDK...")
@@ -78,11 +77,12 @@ endif()
 
 # Set sources for the project
 set(PLUGIN_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/vector.cpp")
+set(TEST_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/vector_test.cpp")
 
 # Add targets to build
 add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCE_FILES})
 # TODO: (sonictk) make tests
-# add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCE_FILES} ${PLUGIN_SOURCE_FILES})
+add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCE_FILES})
 
 # TODO: (sonictk) Make install target
 # install(TARGETS ${PROJECT_NAME} ${MAYA_TARGET_TYPE} DESTINATION ${CMAKE_INSTALL_PREFIX})
