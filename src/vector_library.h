@@ -4,7 +4,6 @@
 #ifdef __cplusplus
 
 #define Shared extern "C"
-#define Shared extern "C"
 
 #endif // __cplusplus
 
@@ -19,8 +18,9 @@
 
 #include <dlfcn.h>
 
-#define DLLExport
-#define DLLImport
+// NOTE: (sonictk) This will only work on GCC/Clang
+#define DLLExport __attribute__ ((visibility ("default")))
+#define DLLImport __attribute__ ((visibility ("default")))
 
 #endif // Platform layer
 

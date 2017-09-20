@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.12)
 set(PROJECT_NAME "simpleVector")
 set(TEST_EXECUTABLE_NAME "tests_${PROJECT_NAME}")
+set(TEST2_EXECUTABLE_NAME "tests2_${PROJECT_NAME}")
 
 if(APPLE)
     message(STATUS "Setting MacOSX SDK...")
@@ -28,6 +29,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
                         -fpascal-strings \
                         -pthread \
                         -fPIC \
+                        -fvisibility=hidden \
                         -O3 \
                         -dynamic")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -O0 -gdwarf-4 -gmodules")
@@ -65,7 +67,8 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                         -Wno-deprecated \
                         -Wno-reorder \
                         -ftemplate-depth-25 \
-                        -fno-gnu-keywords")
+                        -fno-gnu-keywords \
+                        -fvisibility=hidden")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -ggdb -O0")
 
 elseif(MSVC)
@@ -78,11 +81,13 @@ endif()
 # Set sources for the project
 set(PLUGIN_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/vector.cpp")
 set(TEST_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/vector_test.cpp")
+set(TEST2_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/vector_test_load_time_dynamic_linking.cpp")
 
 # Add targets to build
 add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCE_FILES})
-# TODO: (sonictk) make tests
 add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCE_FILES})
+add_executable(${TEST2_EXECUTABLE_NAME} ${TEST2_SOURCE_FILES})
+target_link_libraries(${TEST2_EXECUTABLE_NAME} ${PROJECT_NAME})
 
 # TODO: (sonictk) Make install target
 # install(TARGETS ${PROJECT_NAME} ${MAYA_TARGET_TYPE} DESTINATION ${CMAKE_INSTALL_PREFIX})

@@ -17,6 +17,7 @@ using std::cerr;
 
 int main(int argc, char *argv[])
 {
+	// TODO: (sonictk) Do example of load-time dynamic linking
 	// NOTE: (sonictk) This is an example of Run-time dynamic linking
 #ifdef _WIN32
 	HMODULE vectorModule = LoadLibrary(TEXT("simpleVector.dll"));
