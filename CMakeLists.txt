@@ -25,52 +25,31 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # Using Clang
     set(CMAKE_CXX_FLAGS "-stdlib=libstdc++ \
                         -std=c++0x \
-                        -fno-gnu-keywords \
-                        -fpascal-strings \
                         -pthread \
                         -fPIC \
                         -fvisibility=hidden \
-                        -O3 \
-                        -dynamic")
+                        -O3")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -O0 -gdwarf-4 -gmodules")
     set(CMAKE_EXE_LINKER_FLAGS "-stdlib=libstdc++ \
                                 -std=c++0x \
-                                -fno-gnu-keywords \
-                                -fpascal-strings \
                                 -O3 \
                                 -Wl, \
-                                -headerpad_max_install_names \
-                                -dynamic")
+                                -headerpad_max_install_names ")
 
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     message(STATUS "Setting compiler options for GCC...")
     # using GCC on Linux
-    set(CMAKE_C_FLAGS "-DBits64_ \
-                      -m64 \
-                      -DUNIX \
-                      -D_BOOL \
-                      -DLINUX \
-                      -DFUNCPROTO \
-                      -D_GNU_SOURCE \
-                      -DLINUX_64 \
+    set(CMAKE_C_FLAGS "
                       -fPIC \
-                      -fno-strict-aliasing \
-                      -DREQUIRE_IOSTREAM \
                       -O3 \
                       -Wall \
-                      -Wno-multichar \
-                      -Wno-comment \
-                      -Wno-sign-compare \
-                      -funsigned-char \
                       -pthread")
     set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} \
-                        -Wno-deprecated \
-                        -Wno-reorder \
-                        -ftemplate-depth-25 \
-                        -fno-gnu-keywords \
                         -fvisibility=hidden")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -ggdb -O0")
-
+    set(CMAKE_EXE_LINKER_FLAGS "-stdlib=libstdc++ \
+                                -std=c++0x \
+                                -O3")
 elseif(MSVC)
     message(STATUS "Setting compiler options for MSVC...")
     # using Visual Studio C++

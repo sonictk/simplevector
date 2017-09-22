@@ -67,6 +67,11 @@ int main(int argc, char *argv[])
 		cerr << "Failed to get address of exported function!\n";
 		return 1;
 	}
+	FARPROC vectorFreeAddress = GetProcAddress(vectorModule, "vectorFree");
+	if (vectorFreeAddress == NULL) {
+		cerr << "Failed to get address of exported function!\n";
+		return 1;
+	}
 	void (*vectorInit)(Vector *) = 0;
 	vectorInit = (void (__cdecl *)(Vector *))vectorInitAddress;
 	void (*vectorResize)(Vector *, int) = 0;
@@ -75,6 +80,8 @@ int main(int argc, char *argv[])
 	vectorAppend = (void (__cdecl *)(Vector *, void *))vectorAppendAddress;
 	void *(*vectorGet)(Vector *, int) = 0;
 	vectorGet = (void *(__cdecl *)(Vector *, int))vectorGetAddress;
+	void (*vectorFree)(Vector *) = 0;
+	vectorFree = (void (__cdecl *)(Vector *))vectorFreeAddress;
 
 	Vector testVector;
 	vectorInit(&testVector);
@@ -84,6 +91,7 @@ int main(int argc, char *argv[])
 	char *test2 = (char *)vectorGet(&testVector, 1);
 	cout << test << endl;
 	cout << test2 << endl;
+	vectorFree(&testVector);
 
 	FreeLibrary(vectorModule);
 

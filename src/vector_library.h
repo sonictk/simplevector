@@ -4,6 +4,7 @@
 #ifdef __cplusplus
 
 #define Shared extern "C"
+#define Import extern "C"
 
 #endif // __cplusplus
 
