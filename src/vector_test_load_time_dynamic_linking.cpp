@@ -1,3 +1,6 @@
+#define SDL_MAIN_HANDLED
+#include "SDL.h"
+
 #include "vector.h"
 #include <iostream>
 
@@ -21,6 +24,24 @@ using std::endl;
 
 int main(int argc, char *argv[])
 {
+	SDL_Window *window;
+	SDL_Init(SDL_INIT_VIDEO);
+
+	// Create an application window with the following settings:
+	window = SDL_CreateWindow(
+		"An SDL2 window",
+		SDL_WINDOWPOS_UNDEFINED,
+		SDL_WINDOWPOS_UNDEFINED,
+		1280,
+		720,
+		SDL_WINDOW_OPENGL
+		);
+	if (window == NULL) {
+		return 1;
+	}
+
+	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "test title", "test message", window);
+
 	Vector testVector;
 	vectorInit(&testVector);
 	vectorAppend(&testVector, (void *)"The first test");
@@ -31,5 +52,8 @@ int main(int argc, char *argv[])
 	cout << test << endl;
 	cout << test2 << endl;
 	vectorFree(&testVector);
+
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 	return 0;
 }

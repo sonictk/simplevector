@@ -51,6 +51,11 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                                 -std=c++0x \
                                 -O3")
 elseif(MSVC)
+    # TODO: (sonictk) Replace later with environment variable
+    #include_directories("$ENV{SDL2_PATH}/include")
+    set(SDL2_PATH "c:\\Users\\sonictk\\src\\pkg\\sdl\\src\\win\\SDL2-2.0.5")
+    include_directories("${SDL2_PATH}\\include")
+
     message(STATUS "Setting compiler options for MSVC...")
     # using Visual Studio C++
     set(CMAKE_CXX_FLAGS "/MP /GR /GS /W3 /Gy /Zc:wchar_t /Zc:forScope /O2 /Ob1 /fp:precise /GF /nologo /openmp /EHsc")
@@ -64,9 +69,23 @@ set(TEST2_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/vector_test_load_time_dy
 
 # Add targets to build
 add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCE_FILES})
+
 add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCE_FILES})
+if(MSVC)
+    set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+endif()
+
 add_executable(${TEST2_EXECUTABLE_NAME} ${TEST2_SOURCE_FILES})
 target_link_libraries(${TEST2_EXECUTABLE_NAME} ${PROJECT_NAME})
+
+if(WIN32)
+    target_link_libraries(${TEST2_EXECUTABLE_NAME} "${SDL2_PATH}\\lib\\x64\\SDL2.lib")
+
+    add_custom_command(TARGET ${TEST2_EXECUTABLE_NAME}
+        POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${SDL2_PATH}\\lib\\x64\\SDL2.dll"
+        "$<TARGET_FILE_DIR:${TEST2_EXECUTABLE_NAME}>")
+endif()
 
 # TODO: (sonictk) Make install target
 # install(TARGETS ${PROJECT_NAME} ${MAYA_TARGET_TYPE} DESTINATION ${CMAKE_INSTALL_PREFIX})
