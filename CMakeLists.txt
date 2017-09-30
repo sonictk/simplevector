@@ -26,11 +26,12 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "-stdlib=libstdc++ \
                         -std=c++0x \
                         -pthread \
-                        -fPIC \
+                        -fpic \
                         -fvisibility=hidden \
                         -O3")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -O0 -gdwarf-4 -gmodules")
     set(CMAKE_EXE_LINKER_FLAGS "-stdlib=libstdc++ \
+                                -fpic \
                                 -std=c++0x \
                                 -O3 \
                                 -Wl, \
@@ -39,16 +40,15 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     message(STATUS "Setting compiler options for GCC...")
     # using GCC on Linux
-    set(CMAKE_C_FLAGS "
-                      -fPIC \
+    set(CMAKE_C_FLAGS "-fpic \
                       -O3 \
                       -Wall \
                       -pthread")
     set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} \
                         -fvisibility=hidden")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -ggdb -O0")
-    set(CMAKE_EXE_LINKER_FLAGS "-stdlib=libstdc++ \
-                                -std=c++0x \
+    set(CMAKE_EXE_LINKER_FLAGS "-std=c++0x \
+                               -fpic \
                                 -O3")
 elseif(MSVC)
     # TODO: (sonictk) Replace later with environment variable
