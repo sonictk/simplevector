@@ -69,10 +69,11 @@ set(TEST2_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/vector_test_load_time_dy
 
 # Add targets to build
 add_library(${PROJECT_NAME} SHARED ${PLUGIN_SOURCE_FILES})
+add_library(${PROJECT_NAME}Static STATIC ${PLUGIN_SOURCE_FILES})
 
 add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCE_FILES})
 if(MSVC)
-    set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+    set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS user32.lib gdi32.lib winmm.lib")
 endif()
 
 add_executable(${TEST2_EXECUTABLE_NAME} ${TEST2_SOURCE_FILES})
@@ -80,7 +81,6 @@ target_link_libraries(${TEST2_EXECUTABLE_NAME} ${PROJECT_NAME})
 
 if(WIN32)
     target_link_libraries(${TEST2_EXECUTABLE_NAME} "${SDL2_PATH}\\lib\\x64\\SDL2.lib")
-
     add_custom_command(TARGET ${TEST2_EXECUTABLE_NAME}
         POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${SDL2_PATH}\\lib\\x64\\SDL2.dll"
