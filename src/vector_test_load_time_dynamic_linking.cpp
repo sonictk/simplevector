@@ -46,11 +46,14 @@ int main(int argc, char *argv[])
 	vectorInit(&testVector);
 	vectorAppend(&testVector, (void *)"The first test");
 	vectorAppend(&testVector, (void *)"The second test");
+	vectorAppend(&testVector, (void *)3);
 	char *test = (char *)vectorGet(&testVector, 0);
 	char *test2 = (char *)vectorGet(&testVector, 1);
+	int *test3 = (int *)vectorGet(&testVector, 2);
 	cout << "load-time dynamic linking test" << endl;
 	cout << test << endl;
 	cout << test2 << endl;
+	cout << test3 << endl;
 	vectorFree(&testVector);
 
 	SDL_DestroyWindow(window);
